@@ -1,24 +1,12 @@
-# README
+# SwiftReview
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a single-page review application that stores user's text and star reviews. I am using RoR for the backend and React for the frontend.
 
 Things you may want to cover:
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Ruby version: 3.3 💣
+* Rails version: 7.1.3.2
+* Database creation: rails db:create 🚀
+* Database initialization: rails db:seed 🌱
+* How to run the server: rails s 🏃
+* Deployment instructions:
