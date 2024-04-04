@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import ProductDetail from '../components/ProductDetail';
+import "tailwindcss/base";
+import "tailwindcss/components";
+import "tailwindcss/utilities";
 
 document.addEventListener('DOMContentLoaded', () => {
     const productData = JSON.parse(document.getElementById('product-data').getAttribute('data-product'));
