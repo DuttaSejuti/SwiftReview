@@ -1,9 +1,17 @@
 import React from "react";
 import Rating from "./Rating";
 
+
+function calculateAverageRating(reviews) {
+  let sum = 0;
+  reviews.forEach(review => {
+    sum += review.star;
+  });
+  return sum / reviews.length;
+}
+
 const ProductDetail = ({ product, reviews }) => {
-  const averageRating =
-    reviews.reduce((sum, review) => sum + review.star, 0) / reviews.length;
+  const averageRating = calculateAverageRating(reviews);
 
   return (
     <div className="min-h-screen bg-indigo-200 flex justify-center items-center">
