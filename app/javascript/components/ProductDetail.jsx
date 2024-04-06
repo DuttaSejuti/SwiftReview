@@ -1,17 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import Rating from "./Rating";
-
+import ReviewModal from "./ReviewModal";
 
 function calculateAverageRating(reviews) {
+  if (reviews.length === 0) {
+    return 0;
+  }
+
   let sum = 0;
-  reviews.forEach(review => {
+  reviews.forEach((review) => {
     sum += review.star;
   });
   return sum / reviews.length;
 }
 
 const ProductDetail = ({ product, reviews }) => {
+  const [showModal, setShowModal] = useState(false);
   const averageRating = calculateAverageRating(reviews);
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleReviewAdded = (newReview) => {
+    setReviews([...reviews, newReview]);
+    setShowModal(false);
+  };
 
   return (
     <div className="min-h-screen bg-indigo-200 flex justify-center items-center">
@@ -25,9 +43,19 @@ const ProductDetail = ({ product, reviews }) => {
             <Rating value={averageRating.toFixed(1)} />
           </div>
         </div>
-        <button className="px-2 py-1 bg-blue-500 hover:bg-blue-700 text-white font-bold border border-blue-700 rounded">
+        <button
+          onClick={handleOpenModal}
+          className="px-2 py-1 bg-blue-500 hover:bg-blue-700 text-white font-bold border border-blue-700 rounded"
+        >
           Add Review
         </button>
+        {showModal && (
+          <ReviewModal
+            productId={product.id}
+            onClose={handleCloseModal}
+            onReviewAdded={handleReviewAdded}
+          />
+        )}
         <div className="border-b border-blue-700 my-2"></div>
 
         <div>
