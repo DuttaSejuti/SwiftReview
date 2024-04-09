@@ -16,6 +16,7 @@ function calculateAverageRating(reviews) {
 
 const ProductDetail = ({ product, reviews }) => {
   const [showModal, setShowModal] = useState(false);
+  const [modalReviews, setModalReviews] = useState(reviews);
   const averageRating = calculateAverageRating(reviews);
 
   const handleOpenModal = () => {
@@ -26,9 +27,9 @@ const ProductDetail = ({ product, reviews }) => {
     setShowModal(false);
   };
 
-  const handleReviewAdded = (newReview) => {
-    setReviews([...reviews, newReview]);
-    setShowModal(false);
+  const updateReviews = (newReview) => {
+    setModalReviews([...modalReviews, newReview]);
+    // setShowModal(false);
   };
 
   return (
@@ -53,14 +54,14 @@ const ProductDetail = ({ product, reviews }) => {
           <ReviewModal
             productId={product.id}
             onClose={handleCloseModal}
-            onReviewAdded={handleReviewAdded}
+            updateReviews={updateReviews}
           />
         )}
         <div className="border-b border-blue-700 my-2"></div>
 
         <div>
           <h3 className="mt-4 text-mid font-semibold">Reviews:</h3>
-          {reviews.map((review) => (
+          {modalReviews.map((review) => (
             <div
               key={review.id}
               className="border border-gray-300 rounded-md p-2 mt-1 flex justify-between items-center"

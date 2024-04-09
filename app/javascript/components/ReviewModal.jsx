@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import StarRating from "./StarRating";
 
-const ReviewModal = ({ productId, onClose, onSubmit }) => {
+const ReviewModal = ({ productId, onClose, updateReviews }) => {
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
 
@@ -27,7 +27,7 @@ const ReviewModal = ({ productId, onClose, onSubmit }) => {
       }
 
       const newReview = await response.json();
-      onSubmit(newReview);
+      updateReviews(newReview);
       onClose();
     } catch (error) {
       console.error("Error Submitting review:", error);
