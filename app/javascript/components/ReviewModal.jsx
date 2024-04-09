@@ -36,7 +36,7 @@ const ReviewModal = ({ productId, onClose, updateReviews }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50">
-      <div className="bg-white p-6 rounded-lg">
+      <div className="bg-yellow-100 p-6 rounded-lg w-full md:w-1/2 lg:w-1/3">
         <h2 className="text-xl font-semibold mb-4">Add Review</h2>
         <div className="mb-4">
           <p className="mb-2">What's your rating?</p>
