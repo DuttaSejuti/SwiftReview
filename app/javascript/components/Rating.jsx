@@ -1,21 +1,28 @@
 import React from "react";
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 
 const Rating = ({ value }) => {
-  const stars = [];
-  for (let i = 0; i < 5; i++) {
-    stars.push(
-      <FaStar
-        key={i}
-        className={`star ${i < value ? "text-yellow-500" : "text-gray-400"}`}
-        size={15}
-      />
-    );
-  }
+  const renderStars = () => {
+    const stars = [];
+    const wholeStars = Math.floor(value);
+    const hasHalfStar = value % 1 !== 0;
+
+    for (let i = 0; i < wholeStars; i++) {
+      stars.push(<FaStar key={i} className="star text-yellow-500" />);
+    }
+
+    if (hasHalfStar) {
+      stars.push(
+        <FaStarHalfAlt key="half-star" className="star text-yellow-500" />
+      );
+    }
+
+    return stars;
+  };
 
   return (
     <div className="flex items-center">
-      {stars}
+      {renderStars()}
       <span className="ml-2 normal-nums">{value}</span>
     </div>
   );
