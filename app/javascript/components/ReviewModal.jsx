@@ -4,6 +4,7 @@ import StarRating from "./StarRating";
 const ReviewModal = ({ productId, onClose, updateReviews }) => {
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
+  const [errors, setErrors] = useState([]);
 
   const handleRatingChange = (newRating) => {
     setRating(newRating);
@@ -23,7 +24,10 @@ const ReviewModal = ({ productId, onClose, updateReviews }) => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to add review");
+        const errorData = await response.json();
+        setErrors(errorData.errors);
+        return;
+        // throw new Error("Failed to add review");
       }
 
       const newReview = await response.json();
@@ -42,6 +46,13 @@ const ReviewModal = ({ productId, onClose, updateReviews }) => {
           <p className="mb-2">What's your rating?</p>
           <StarRating value={rating} onClick={handleRatingChange} />
         </div>
+        {errors && errors.length > 0 && (
+          <div className="mb-4">
+            {errors.map((error, index) => (
+              <p key={index} className="text-red-500">{error}</p>
+            ))}
+          </div>
+        )}
         <div className="mb-4">
           <textarea
             placeholder="Start typing..."
