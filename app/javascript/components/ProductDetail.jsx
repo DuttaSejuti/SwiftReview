@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Rating from "./Rating";
 import ReviewModal from "./ReviewModal";
 
@@ -14,10 +14,10 @@ function calculateAverageRating(reviews) {
   return sum / reviews.length;
 }
 
-const ProductDetail = ({ product, reviews }) => {
+const ProductDetail = ({ product }) => {
   const [showModal, setShowModal] = useState(false);
-  const [modalReviews, setModalReviews] = useState(reviews);
-  const averageRating = calculateAverageRating(reviews);
+  const [modalReviews, setModalReviews] = useState([]);
+  const averageRating = calculateAverageRating(modalReviews);
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -29,8 +29,26 @@ const ProductDetail = ({ product, reviews }) => {
 
   const updateReviews = (newReview) => {
     setModalReviews([...modalReviews, newReview]);
-    // setShowModal(false);
   };
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch(`/products/${product.id}/reviews`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch reiews");
+        }
+        const data = await response.json();
+        setModalReviews(data.reviews);
+      } catch (error) {
+        console.error("Error fetching the reviews:", error);
+      }
+    };
+
+    const intervalId = setInterval(fetchReviews, 5000);
+    fetchReviews();
+    return () => clearInterval(intervalId);
+  }, [product.id]);
 
   return (
     <div className="min-h-screen bg-indigo-200 flex justify-center items-center">
@@ -64,10 +82,12 @@ const ProductDetail = ({ product, reviews }) => {
           {modalReviews.map((review) => (
             <div
               key={review.id}
-              className="border border-gray-300 rounded-md p-2 mt-1 flex justify-between items-center"
+              className="border border-gray-300 rounded-md p-2 mt-1 flex flex-col items-start"
             >
+              <div className="max-w-lg">
+                <p className="whitespace-pre-wrap">{review.text} </p>
+              </div>
               <div className="flex items-center">
-                <p className="mr-2">{review.text}</p>
                 <Rating value={review.star} />
               </div>
             </div>

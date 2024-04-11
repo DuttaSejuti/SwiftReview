@@ -1,6 +1,11 @@
 class ReviewsController < ApplicationController
   def index
+    @product = Product.find(params[:product_id])
+    @reviews = @product.reviews
+
+    render json: { reviews: @reviews }
   end
+
   def create
     @product = Product.find(params[:product_id])
     @review = @product.reviews.new(review_params)
@@ -8,11 +13,11 @@ class ReviewsController < ApplicationController
     if @review.save
       render json: @review, status: :created
     else
-      render json: @review.errors, status: :unprocessable_entity
+      render json: { errors: @review.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
-  private 
+  private
 
   def review_params 
     params.require(:review).permit(:text, :star)
