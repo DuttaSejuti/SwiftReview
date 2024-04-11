@@ -27,7 +27,6 @@ const ReviewModal = ({ productId, onClose, updateReviews }) => {
         const errorData = await response.json();
         setErrors(errorData.errors);
         return;
-        // throw new Error("Failed to add review");
       }
 
       const newReview = await response.json();

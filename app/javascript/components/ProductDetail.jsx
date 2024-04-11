@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Rating from "./Rating";
 import ReviewModal from "./ReviewModal";
 
@@ -14,10 +14,10 @@ function calculateAverageRating(reviews) {
   return sum / reviews.length;
 }
 
-const ProductDetail = ({ product, reviews }) => {
+const ProductDetail = ({ product }) => {
   const [showModal, setShowModal] = useState(false);
-  const [modalReviews, setModalReviews] = useState(reviews);
-  const averageRating = calculateAverageRating(reviews);
+  const [modalReviews, setModalReviews] = useState([]);
+  const averageRating = calculateAverageRating(modalReviews);
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -29,8 +29,27 @@ const ProductDetail = ({ product, reviews }) => {
 
   const updateReviews = (newReview) => {
     setModalReviews([...modalReviews, newReview]);
-    // setShowModal(false);
   };
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch(`/products/${product.id}/reviews`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch reiews");
+        }
+        const data = await response.json();
+        console.log(data);
+        setModalReviews(data.reviews);
+      } catch (error) {
+        console.error("Error fetching the reviews:", error);
+      }
+    };
+
+    const intervalId = setInterval(fetchReviews, 5000);
+    fetchReviews();
+    return () => clearInterval(intervalId);
+  }, [product.id]);
 
   return (
     <div className="min-h-screen bg-indigo-200 flex justify-center items-center">

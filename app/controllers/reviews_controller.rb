@@ -1,6 +1,11 @@
 class ReviewsController < ApplicationController
   def index
+    @product = Product.find(params[:product_id])
+    @reviews = @product.reviews
+
+    render json: { reviews: @reviews }
   end
+
   def create
     @product = Product.find(params[:product_id])
     @review = @product.reviews.new(review_params)
@@ -12,7 +17,7 @@ class ReviewsController < ApplicationController
     end
   end
 
-  private 
+  private
 
   def review_params 
     params.require(:review).permit(:text, :star)
