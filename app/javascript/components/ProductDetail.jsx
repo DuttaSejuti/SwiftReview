@@ -39,7 +39,6 @@ const ProductDetail = ({ product }) => {
           throw new Error("Failed to fetch reiews");
         }
         const data = await response.json();
-        console.log(data);
         setModalReviews(data.reviews);
       } catch (error) {
         console.error("Error fetching the reviews:", error);
@@ -83,10 +82,12 @@ const ProductDetail = ({ product }) => {
           {modalReviews.map((review) => (
             <div
               key={review.id}
-              className="border border-gray-300 rounded-md p-2 mt-1 flex justify-between items-center"
+              className="border border-gray-300 rounded-md p-2 mt-1 flex flex-col items-start"
             >
+              <div className="max-w-lg">
+                <p className="whitespace-pre-wrap">{review.text} </p>
+              </div>
               <div className="flex items-center">
-                <p className="mr-2">{review.text}</p>
                 <Rating value={review.star} />
               </div>
             </div>
