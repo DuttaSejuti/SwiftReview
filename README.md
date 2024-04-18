@@ -66,12 +66,14 @@ To run SwiftReview locally, follow these steps:
    ```
    [Reference](https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported)
 
-8. Start the Rails server.
+   after finishing ```npm update``` try running ```rails assets:precompile``` again, this time it should work
+
+9. Start the Rails server.
    ```bash
    rails server
    ```
 
-9. Open your web browser and navigate to `http://localhost:3000` to access SwiftReview.
+10. Open your web browser and navigate to `http://localhost:3000` to access SwiftReview.
 
 ## Usage
 
