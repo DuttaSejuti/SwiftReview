@@ -60,7 +60,7 @@ To run SwiftReview locally, follow these steps:
    rails assets:precompile
    ```
 
-7. Additionally if you get any errors like "Error: error:#####:digital envelope routines::unsupported" after running ```rails assets:precompile``` the following command helps (optional if error occurs)
+7. Additionally if you get any errors like "Error: error:#####:digital envelope routines::unsupported" or "LoadError: cannot load such file -- sassc (LoadError)" after running ```rails assets:precompile``` the following command helps (optional if error occurs)
    ```bash
    npm update
    ```
