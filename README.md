@@ -52,17 +52,26 @@ To run SwiftReview locally, follow these steps:
    rails db:seed
    ```
 
-6. Start the Rails server.
+6. Set up the rails public folder.
+   ```bash
+   # to get the public/packs/js/manifest.js file run this command
+   bin/webpack
+   # to compile the assets to get public/assets
+   rails assets:precompile
+   ```
+
+7. Additionally if you get any errors like "Error: error:#####:digital envelope routines::unsupported" after running ```rails assets:precompile``` the following command helps (optional if error occurs)
+   ```bash
+   npm update
+   ```
+   [Reference](https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported)
+
+8. Start the Rails server.
    ```bash
    rails server
    ```
 
-7. Start the React development server.
-   ```bash
-   npm start
-   ```
-
-8. Open your web browser and navigate to `http://localhost:3000` to access SwiftReview.
+9. Open your web browser and navigate to `http://localhost:3000` to access SwiftReview.
 
 ## Usage
 
